@@ -1,14 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MovimientoFragment">
+    android:orientation="vertical"
+    android:padding="24dp">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/nuevo_movimiento"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="24dp"/>
 
-</FrameLayout>
+    <EditText
+        android:id="@+id/etConcepto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/concepto_ej_compra_mercadona"
+        android:inputType="text"
+        android:layout_marginBottom="16dp"/>
+
+    <EditText
+        android:id="@+id/etImporte"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/importe"
+        android:inputType="numberDecimal"
+        android:layout_marginBottom="16dp"/>
+
+    <Switch
+        android:id="@+id/switchRecurrente"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/es_un_gasto_ingreso_recurrente"
+        android:textSize="16sp"
+        android:layout_marginBottom="32dp"/>
+
+    <Button
+        android:id="@+id/btnGuardarMovimiento"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="@string/guardar_movimiento" />
+
+</LinearLayout>

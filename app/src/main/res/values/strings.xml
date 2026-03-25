@@ -9,4 +9,9 @@
     <string name="retenciones_impuestos">Retenciones / Impuestos (€)</string>
     <string name="calcular_neto">Calcular Neto</string>
     <string name="salario_neto">Salario Neto:</string>
+    <string name="nuevo_movimiento">Nuevo Movimiento</string>
+    <string name="concepto_ej_compra_mercadona">Concepto (ej. Compra Mercadona)</string>
+    <string name="importe">Importe (€)</string>
+    <string name="es_un_gasto_ingreso_recurrente">¿Es un gasto/ingreso recurrente?</string>
+    <string name="guardar_movimiento">Guardar Movimiento</string>
 </resources>
