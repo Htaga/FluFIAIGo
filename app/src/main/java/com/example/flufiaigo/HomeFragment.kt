@@ -30,5 +30,17 @@ class HomeFragment : Fragment() {
         btnNomina.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_nominaFragment)
         }
+
+        val btnSoporte = view.findViewById<Button>(R.id.btnSoporte)
+
+        btnSoporte.setOnClickListener {
+            // Creamos un Intent Implícito para abrir una URL
+            val urlSoporte = "https://github.com/Htaga/FluFIAIGo"
+            val intentImplicito = android.content.Intent(android.content.Intent.ACTION_VIEW)
+            intentImplicito.data = android.net.Uri.parse(urlSoporte)
+
+            // Iniciamos la actividad (Android preguntará con qué navegador abrirlo)
+            startActivity(intentImplicito)
+        }
     }
 }
