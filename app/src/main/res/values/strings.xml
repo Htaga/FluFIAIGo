@@ -5,4 +5,8 @@
     <string name="nombre_app">FluFiAI GO</string>
     <string name="añadir_movimiento">Añadir Movimiento</string>
     <string name="registrar_nomina">Registrar Nómina</string>
+    <string name="salario_bruto">Salario Bruto (€)</string>
+    <string name="retenciones_impuestos">Retenciones / Impuestos (€)</string>
+    <string name="calcular_neto">Calcular Neto</string>
+    <string name="salario_neto">Salario Neto:</string>
 </resources>
