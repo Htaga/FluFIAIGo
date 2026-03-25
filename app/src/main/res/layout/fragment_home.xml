@@ -15,13 +15,6 @@
         android:layout_marginBottom="40dp"/>
 
     <Button
-        android:id="@+id/btnNuevoMovimiento"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:text="@string/añadir_movimiento"
-        android:layout_marginBottom="16dp"/>
-
-    <Button
         android:id="@+id/btnNuevaNomina"
         android:layout_width="match_parent"
         android:layout_height="60dp"
@@ -32,13 +25,6 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:text="@string/nuevo_movimiento"
-        android:layout_marginBottom="16dp"/>
-
-    <Button
-        android:id="@+id/btnNuevaNomina"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:text="@string/registrar_nomina"
         android:layout_marginBottom="16dp"/>
 
     <Button
