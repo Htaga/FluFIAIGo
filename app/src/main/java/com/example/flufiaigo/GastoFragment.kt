@@ -15,7 +15,7 @@ class GastoFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_movimiento, container, false)
+        return inflater.inflate(R.layout.fragment_gasto, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -25,7 +25,7 @@ class GastoFragment : Fragment() {
 
         btnGuardar.setOnClickListener {
             // Simulamos que guarda mostrando un mensaje
-            Toast.makeText(requireContext(), "Movimiento guardado", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), "Gasto guardado", Toast.LENGTH_SHORT).show()
 
             // Volvemos a la pantalla principal (Home) sacando este fragmento de la pila
             findNavController().popBackStack()

@@ -11,8 +11,8 @@
         android:label="fragment_home"
         tools:layout="@layout/fragment_home" >
         <action
-            android:id="@+id/action_homeFragment_to_movimientoFragment"
-            app:destination="@id/movimientoFragment" />
+            android:id="@+id/action_homeFragment_to_gastoFragment"
+            app:destination="@id/gastoFragment" />
         <action
             android:id="@+id/action_homeFragment_to_nominaFragment"
             app:destination="@id/nominaFragment" />
@@ -26,10 +26,10 @@
         android:label="fragment_nomina"
         tools:layout="@layout/fragment_nomina" />
     <fragment
-        android:id="@+id/movimientoFragment"
+        android:id="@+id/gastoFragment"
         android:name="com.example.flufiaigo.GastoFragment"
-        android:label="fragment_movimiento"
-        tools:layout="@layout/fragment_movimiento" />
+        android:label="fragment_gasto"
+        tools:layout="@layout/fragment_gasto" />
     <fragment
         android:id="@+id/ingresoFragment"
         android:name="com.example.flufiaigo.IngresoFragment"

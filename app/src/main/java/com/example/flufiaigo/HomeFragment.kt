@@ -20,12 +20,12 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val btnMovimiento = view.findViewById<Button>(R.id.btnNuevoMovimiento)
+        val btnGasto = view.findViewById<Button>(R.id.btnNuevoGasto)
         val btnIngreso = view.findViewById<Button>(R.id.btnNuevoIngreso)
         val btnNomina = view.findViewById<Button>(R.id.btnNuevaNomina)
 
-        btnMovimiento.setOnClickListener {
-            findNavController().navigate(R.id.action_homeFragment_to_movimientoFragment)
+        btnGasto.setOnClickListener {
+            findNavController().navigate(R.id.action_homeFragment_to_gastoFragment)
         }
 
         btnIngreso.setOnClickListener {
