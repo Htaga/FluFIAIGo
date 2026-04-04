@@ -27,7 +27,7 @@
         tools:layout="@layout/fragment_nomina" />
     <fragment
         android:id="@+id/movimientoFragment"
-        android:name="com.example.flufiaigo.MovimientoFragment"
+        android:name="com.example.flufiaigo.GastoFragment"
         android:label="fragment_movimiento"
         tools:layout="@layout/fragment_movimiento" />
     <fragment
