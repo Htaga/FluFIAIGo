@@ -16,4 +16,5 @@
     <string name="guardar_gasto">Guardar Gasto</string>
     <string name="guardar_ingreso">Guardar Ingreso</string>
     <string name="soporte_y_ayuda">Soporte y Ayuda</string>
+    <string name="nombre">Nombre</string>
 </resources>
