@@ -1,12 +1,21 @@
 package com.example.flufiaigo
 
-import java.util.Date
+data class NominaModel(
+    val id: String,
+    val empleadoNombre: String,
+    val sueldoBase: Double,
+    val horasExtra: Double,
+    val bonificaciones: Double,
+    val impuestos: Double,
+    val seguridadSocial: Double,
+    val otrosDeducciones: Double,
+    val fecha: Long = System.currentTimeMillis(),
+    val divisa: String = "€"
+) {
+    // Cuando se acceden a estas variables se calcula su valor
+    val salarioBruto: Double 
+        get() = sueldoBase + horasExtra + bonificaciones
 
-data class NominaModel(    val id: String,
-                          val empleadoNombre: String,
-                          val sueldoBase: Double,
-                          val deducciones: Double,
-                          val bonificaciones: Double,
-                          val fecha: Date,
-                          val netoARecibir: Double
-)
+    val salarioNeto: Double 
+        get() = salarioBruto - (impuestos + seguridadSocial + otrosDeducciones)
+}
