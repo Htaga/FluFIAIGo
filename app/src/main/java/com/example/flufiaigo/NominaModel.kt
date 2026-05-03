@@ -1,7 +1,14 @@
 package com.example.flufiaigo
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import java.util.Date
+import java.util.UUID
+
+@Entity(tableName = "nominas")
 data class NominaModel(
-    val id: String,
+    @PrimaryKey
+    val id: String = UUID.randomUUID().toString(),
     val empleadoNombre: String,
     val sueldoBase: Double,
     val horasExtra: Double,
@@ -9,10 +16,9 @@ data class NominaModel(
     val impuestos: Double,
     val seguridadSocial: Double,
     val otrosDeducciones: Double,
-    val fecha: Long = System.currentTimeMillis(),
+    val fecha: Date = Date(),
     val divisa: String = "€"
 ) {
-    // Cuando se acceden a estas variables se calcula su valor
     val salarioBruto: Double 
         get() = sueldoBase + horasExtra + bonificaciones
 
