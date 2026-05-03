@@ -1,5 +1,9 @@
 plugins {
     alias(libs.plugins.android.application)
+    //Esto es para kapt, no funciona
+//    alias(libs.plugins.kotlin.android)
+//    id("kotlin-kapt")
+//    kotlin("kapt")
 }
 
 android {
@@ -56,4 +60,11 @@ dependencies {
     // Ciclo de vida: ViewModel y LiveData
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
     implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.7.0")
+
+    // RecyclerView
+    implementation("androidx.recyclerview:recyclerview:1.3.0")
+    implementation("com.google.android.material:material:1.8.0")
+    implementation("androidx.cardview:cardview:1.0.0")
+    //Material design
+
 }
