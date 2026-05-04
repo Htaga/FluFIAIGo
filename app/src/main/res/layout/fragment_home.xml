@@ -1,43 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:gravity="center"
-    android:padding="24dp">
+    tools:context=".HomeFragment">
 
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewEntries"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:listitem="@layout/item_finance_entry" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAddEntry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/nombre_app"
-        android:textSize="28sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="40dp"/>
+        android:layout_margin="24dp"
+        android:contentDescription="Añadir entrada"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@android:drawable/ic_input_add"
+        app:tint="@android:color/white" />
 
-    <Button
-        android:id="@+id/btnNuevoIngreso"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:text="@string/nuevo_ingreso" />
-
-    <Button
-        android:id="@+id/btnNuevoGasto"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_marginBottom="16dp"
-        android:text="@string/nuevo_gasto" />
-
-    <Button
-        android:id="@+id/btnNuevaNomina"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:text="@string/registrar_nomina" />
-
-    <Button
-        android:id="@+id/btnSoporte"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/soporte_y_ayuda"
-        style="@style/Widget.MaterialComponents.Button.TextButton" />
-
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

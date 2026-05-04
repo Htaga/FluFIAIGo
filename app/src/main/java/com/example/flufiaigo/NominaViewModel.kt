@@ -10,30 +10,36 @@ class NominaViewModel : ViewModel() {
 
     // 1. DATOS DE ENTRADA (Input del usuario)
     val nombreEmpleado = MutableLiveData<String>("")
-    val salarioBruto = MutableLiveData<String>("")
-    val retenciones = MutableLiveData<String>("")
+    val sueldoBase = MutableLiveData<String>("")
+    val horasExtra = MutableLiveData<String>("")
+    val bonificaciones = MutableLiveData<String>("")
+    val impuestos = MutableLiveData<String>("")
+    val seguridadSocial = MutableLiveData<String>("")
+    val otrosDeducciones = MutableLiveData<String>("")
 
     // 2. RESULTADO PROTEGIDO
-    // Propiedad privada: el ViewModel puede modificarla internamente.
     private val _nominaActual = MutableLiveData<NominaModel?>()
-
-    // Propiedad pública: el Fragmento solo puede "observar" (solo lectura).
     val nominaActual: LiveData<NominaModel?> get() = _nominaActual
 
     fun calcularYGenerarNomina() {
-        val bruto = salarioBruto.value?.toDoubleOrNull() ?: 0.0
-        val deduccion = retenciones.value?.toDoubleOrNull() ?: 0.0
-        val neto = bruto - deduccion
+        val base = sueldoBase.value?.toDoubleOrNull() ?: 0.0
+        val extra = horasExtra.value?.toDoubleOrNull() ?: 0.0
+        val bonos = bonificaciones.value?.toDoubleOrNull() ?: 0.0
+        val imp = impuestos.value?.toDoubleOrNull() ?: 0.0
+        val ss = seguridadSocial.value?.toDoubleOrNull() ?: 0.0
+        val otros = otrosDeducciones.value?.toDoubleOrNull() ?: 0.0
 
         // Se crea el objeto del modelo con los datos actuales
         val nuevaNomina = NominaModel(
             id = UUID.randomUUID().toString(),
             empleadoNombre = nombreEmpleado.value ?: "Sin nombre",
-            sueldoBase = bruto,
-            deducciones = deduccion,
-            bonificaciones = 0.0,
-            fecha = Date(),
-            netoARecibir = neto
+            sueldoBase = base,
+            horasExtra = extra,
+            bonificaciones = bonos,
+            impuestos = imp,
+            seguridadSocial = ss,
+            otrosDeducciones = otros,
+            fecha = Date()
         )
 
         // SÓLO el ViewModel tiene acceso a .value para escribir a través de la propiedad privada

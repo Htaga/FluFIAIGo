@@ -7,64 +7,87 @@
             type="com.example.flufiaigo.NominaViewModel" />
     </data>
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:padding="24dp">
+        android:fillViewport="true">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/registrar_nomina"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="24dp" />
-
-        <!-- Nuevo campo para el nombre, vinculado al ViewModel -->
-        <EditText
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/nombre"
-            android:inputType="textPersonName"
-            android:text="@={viewModel.nombreEmpleado}" />
+            android:orientation="vertical"
+            android:padding="24dp">
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/salario_bruto"
-            android:inputType="numberDecimal"
-            android:text="@={viewModel.salarioBruto}" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/registrar_nomina"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="24dp" />
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/retenciones_impuestos"
-            android:inputType="numberDecimal"
-            android:layout_marginTop="16dp"
-            android:text="@={viewModel.retenciones}" />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/nombre"
+                android:inputType="textPersonName"
+                android:text="@={viewModel.nombreEmpleado}"
+                android:layout_marginBottom="12dp" />
 
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="@string/calcular_neto"
-            android:onClick="@{() -> viewModel.calcularYGenerarNomina()}" />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Sueldo Base (€)"
+                android:inputType="numberDecimal"
+                android:text="@={viewModel.sueldoBase}"
+                android:layout_marginBottom="12dp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:text="@string/salario_neto"
-            android:textSize="18sp" />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Horas Extra (€)"
+                android:inputType="numberDecimal"
+                android:text="@={viewModel.horasExtra}"
+                android:layout_marginBottom="12dp" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{viewModel.nominaActual.netoARecibir + ` €`}"
-            android:textSize="32sp"
-            android:textStyle="bold"
-            android:textColor="#4CAF50" />
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Bonificaciones (€)"
+                android:inputType="numberDecimal"
+                android:text="@={viewModel.bonificaciones}"
+                android:layout_marginBottom="12dp" />
 
-    </LinearLayout>
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Impuestos (€)"
+                android:inputType="numberDecimal"
+                android:text="@={viewModel.impuestos}"
+                android:layout_marginBottom="12dp" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Seguridad Social (€)"
+                android:inputType="numberDecimal"
+                android:text="@={viewModel.seguridadSocial}"
+                android:layout_marginBottom="12dp" />
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Otras Deducciones (€)"
+                android:inputType="numberDecimal"
+                android:text="@={viewModel.otrosDeducciones}"
+                android:layout_marginBottom="24dp" />
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/calcular_neto"
+                android:onClick="@{() -> viewModel.calcularYGenerarNomina()}" />
+
+        </LinearLayout>
+    </ScrollView>
 </layout>

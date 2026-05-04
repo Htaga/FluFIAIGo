@@ -17,4 +17,9 @@
     <string name="guardar_ingreso">Guardar Ingreso</string>
     <string name="soporte_y_ayuda">Soporte y Ayuda</string>
     <string name="nombre">Nombre</string>
+    <string name="fecha_gasto">Fecha Gasto</string>
+    <string name="fecha_ingreso">Fecha Ingreso</string>
+    <string name="categoria_gasto">Categoria (ej. Transporte)</string>
+    <string name="metodo_pago">Método de Pago (efectivo o tarjeta)</string>
+    <string name="metodo_cobro">Método de cobro (efectivo o tarjeta)</string>
 </resources>

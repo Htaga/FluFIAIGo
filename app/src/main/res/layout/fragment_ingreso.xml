@@ -1,46 +1,73 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="24dp">
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/nuevo_ingreso"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="24dp"/>
+    <data>
+        <variable
+            name="viewModel"
+            type="com.example.flufiaigo.IngresoViewModel" />
+    </data>
 
-    <EditText
-        android:id="@+id/etConcepto"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/concepto_ingreso"
-        android:inputType="text"
-        android:layout_marginBottom="16dp"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="24dp">
 
-    <EditText
-        android:id="@+id/etImporte"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/importe"
-        android:inputType="numberDecimal"
-        android:layout_marginBottom="16dp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/nuevo_ingreso"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="24dp"/>
 
-    <Switch
-        android:id="@+id/switchRecurrente"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/es_un_ingreso_recurrente"
-        android:textSize="16sp"
-        android:layout_marginBottom="32dp"/>
+        <EditText
+            android:id="@+id/etConcepto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/concepto_ingreso"
+            android:inputType="text"
+            android:text="@={viewModel.concepto}"
+            android:layout_marginBottom="16dp"/>
+            
+        <EditText
+            android:id="@+id/etImporte"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/importe"
+            android:inputType="numberDecimal"
+            android:text="@={viewModel.importe}"
+            android:layout_marginBottom="16dp"/>
 
-    <Button
-        android:id="@+id/btnGuardarIngreso"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:text="@string/guardar_ingreso" />
+        <EditText
+            android:id="@+id/metodoPago"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/metodo_cobro"
+            android:inputType="text"
+            android:text="@={viewModel.metodoCobro}"
+            android:layout_marginBottom="16dp"/>
 
-</LinearLayout>
+        <TextView
+            android:id="@+id/tvFechaIngreso"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/fecha_ingreso"
+            android:text="@{viewModel.fechaTexto}"
+            android:textSize="16sp"
+            android:padding="12dp"
+            android:background="?android:attr/editTextBackground"
+            android:layout_marginBottom="16dp"
+            android:clickable="true"
+            android:focusable="false"
+            android:drawableEnd="@android:drawable/ic_menu_today"/>
+
+        <Button
+            android:id="@+id/btnGuardarIngreso"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:onClick="@{() -> viewModel.crearIngreso()}"
+            android:text="@string/guardar_ingreso" />
+
+    </LinearLayout>
+</layout>
