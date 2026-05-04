@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
         <variable
@@ -17,58 +18,87 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/nuevo_gasto"
-            android:textSize="24sp"
+            android:textSize="28sp"
             android:textStyle="bold"
             android:layout_marginBottom="24dp"/>
 
-        <EditText
-            android:id="@+id/etConcepto"
+        <!-- Concepto con Material Design -->
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/concepto_gasto"
-            android:inputType="text"
-            android:text="@={viewModel.descripcion}"
-            android:layout_marginBottom="16dp"/>
-
-        <EditText
-            android:id="@+id/etImporte"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/importe"
-            android:inputType="numberDecimal"
-            android:text="@={viewModel.importe}"
-            android:layout_marginBottom="16dp"/>
-
-        <EditText
-            android:id="@+id/metodoPago"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/metodo_pago"
-            android:inputType="numberDecimal"
-            android:text="@={viewModel.tipoPago}"
-            android:layout_marginBottom="16dp"/>
-
-        <TextView
-            android:id="@+id/tvFechaGasto"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/fecha_gasto"
-            android:text="@{viewModel.fechaTexto}"
-            android:textSize="16sp"
-            android:padding="12dp"
-            android:background="?android:attr/editTextBackground"
             android:layout_marginBottom="16dp"
-            android:clickable="true"
-            android:focusable="false"
-            android:drawableEnd="@android:drawable/ic_menu_today"/>
+            android:hint="@string/concepto_gasto">
 
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etConcepto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:text="@={viewModel.descripcion}" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <Button
+        <!-- Importe con Material Design -->
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:hint="@string/importe"
+            app:startIconDrawable="@android:drawable/ic_menu_myplaces">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etImporte"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:text="@={viewModel.importe}" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Método de Pago (Desplegable Material) -->
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:hint="@string/metodo_pago">
+
+            <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                android:id="@+id/metodoPago"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none"
+                android:text="@={viewModel.metodoPago}"
+                app:simpleItems="@array/opciones_pago" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Fecha (Mantenemos tu lógica de clic, pero más bonito) -->
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:hint="@string/fecha_gasto">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/tvFechaGasto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.fechaTexto}"
+                android:clickable="true"
+                android:focusable="false"
+                android:cursorVisible="false"
+                app:endIconDrawable="@android:drawable/ic_menu_today"/>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Botón Material -->
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnGuardarMovimiento"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:onClick="@{() -> viewModel.crearGasto()}"
-            android:text="@string/guardar_gasto" />
+            android:text="@string/guardar_gasto"
+            app:cornerRadius="8dp"/>
 
     </LinearLayout>
 </layout>

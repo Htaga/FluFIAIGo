@@ -22,4 +22,8 @@
     <string name="categoria_gasto">Categoria (ej. Transporte)</string>
     <string name="metodo_pago">Método de Pago (efectivo o tarjeta)</string>
     <string name="metodo_cobro">Método de cobro (efectivo o tarjeta)</string>
+    <string-array name="opciones_pago">
+        <item>Efectivo</item>
+        <item>Tarjeta</item>
+    </string-array>
 </resources>
