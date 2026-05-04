@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
         <variable
@@ -22,70 +23,106 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/registrar_nomina"
-                android:textSize="24sp"
+                android:textSize="28sp"
                 android:textStyle="bold"
                 android:layout_marginBottom="24dp" />
 
-            <EditText
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/nombre"
-                android:inputType="textPersonName"
-                android:text="@={viewModel.nombreEmpleado}"
-                android:layout_marginBottom="12dp" />
+                android:layout_marginBottom="12dp"
+                android:hint="@string/nombre">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:text="@={viewModel.nombreEmpleado}" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <EditText
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Sueldo Base (€)"
-                android:inputType="numberDecimal"
-                android:text="@={viewModel.sueldoBase}"
-                android:layout_marginBottom="12dp" />
+                android:layout_marginBottom="12dp"
+                android:hint="Sueldo Base (€)">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal"
+                    android:text="@={viewModel.sueldoBase}" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <EditText
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Horas Extra (€)"
-                android:inputType="numberDecimal"
-                android:text="@={viewModel.horasExtra}"
-                android:layout_marginBottom="12dp" />
+                android:layout_marginBottom="12dp"
+                android:hint="Horas Extra (€)">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal"
+                    android:text="@={viewModel.horasExtra}" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <EditText
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Bonificaciones (€)"
-                android:inputType="numberDecimal"
-                android:text="@={viewModel.bonificaciones}"
-                android:layout_marginBottom="12dp" />
+                android:layout_marginBottom="12dp"
+                android:hint="Bonificaciones (€)">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal"
+                    android:text="@={viewModel.bonificaciones}" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <EditText
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Impuestos (€)"
-                android:inputType="numberDecimal"
-                android:text="@={viewModel.impuestos}"
-                android:layout_marginBottom="12dp" />
+                android:layout_marginBottom="12dp"
+                android:hint="Impuestos (€)">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal"
+                    android:text="@={viewModel.impuestos}" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <EditText
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Seguridad Social (€)"
-                android:inputType="numberDecimal"
-                android:text="@={viewModel.seguridadSocial}"
-                android:layout_marginBottom="12dp" />
+                android:layout_marginBottom="12dp"
+                android:hint="Seguridad Social (€)">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal"
+                    android:text="@={viewModel.seguridadSocial}" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <EditText
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Otras Deducciones (€)"
-                android:inputType="numberDecimal"
-                android:text="@={viewModel.otrosDeducciones}"
-                android:layout_marginBottom="24dp" />
+                android:layout_marginBottom="24dp"
+                android:hint="Otras Deducciones (€)">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="numberDecimal"
+                    android:text="@={viewModel.otrosDeducciones}" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <Button
+            <com.google.android.material.button.MaterialButton
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="60dp"
                 android:text="@string/calcular_neto"
+                app:cornerRadius="8dp"
                 android:onClick="@{() -> viewModel.calcularYGenerarNomina()}" />
 
         </LinearLayout>
