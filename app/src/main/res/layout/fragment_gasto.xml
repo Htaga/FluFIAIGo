@@ -72,7 +72,7 @@
                 app:simpleItems="@array/opciones_pago" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <!-- Fecha (Mantenemos tu lógica de clic, pero más bonito) -->
+        <!-- Fecha -->
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
