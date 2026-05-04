@@ -13,4 +13,4 @@ data class IngresoModel(
     override val concepto: String,
     override val importe: Double,
     override val metodoPago: String,
-) : Entrada(id, fecha, concepto, importe, metodoPago)
+) : Entrada(id, fecha, concepto, importe, metodoPago, "ingreso")

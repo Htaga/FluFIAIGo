@@ -35,7 +35,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"
-                android:text="@={viewModel.descripcion}" />
+                android:text="@={viewModel.concepto}" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <!-- Importe con Material Design -->

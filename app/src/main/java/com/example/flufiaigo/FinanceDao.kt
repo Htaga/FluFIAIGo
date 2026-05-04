@@ -36,6 +36,6 @@ interface FinanceDao {
     suspend fun deleteNomina(nomina: NominaModel)
 
     //Todos los movimientos
-    @Query("SELECT * FROM ingresos UNION SELECT * FROM gastos ORDER BY fecha DESC")
+    @Query("SELECT *, 'ingreso' as tipo FROM ingresos UNION SELECT *, 'gasto' as tipo FROM gastos ORDER BY fecha DESC")
     fun getAllMovimientos(): LiveData<List<Entrada>>
 }
