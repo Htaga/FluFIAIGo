@@ -20,6 +20,12 @@
     <string name="fecha_gasto">Fecha Gasto</string>
     <string name="fecha_ingreso">Fecha Ingreso</string>
     <string name="categoria_gasto">Categoria (ej. Transporte)</string>
-    <string name="metodo_pago">Método de Pago (efectivo o tarjeta)</string>
-    <string name="metodo_cobro">Método de cobro (efectivo o tarjeta)</string>
+    <string name="metodo_pago">Método de Pago</string>
+    <string name="metodo_cobro">Método de Cobro</string>
+    <string-array name="opciones_pago">
+        <item>Efectivo</item>
+        <item>Tarjeta</item>
+        <item>Bizum</item>
+        <item>Transferencia</item>
+    </string-array>
 </resources>
