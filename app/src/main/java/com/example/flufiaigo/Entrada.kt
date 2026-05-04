@@ -8,5 +8,5 @@ open class Entrada(
     open val concepto: String,
     open val importe: Double,
     open val metodoPago: String,
-    open val tipo: String = ""
+    open val tipo: String
 )
