@@ -39,4 +39,7 @@
         <item>Bizum</item>
         <item>Transfer</item>
     </string-array>
+    <string name="prefijo_nomina">Payroll: %s</string>
+    <string name="movimiento_eliminado">Entry deleted</string>
+    <string name="cambiar_tema">Change Theme</string>
 </resources>

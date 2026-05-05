@@ -39,4 +39,7 @@
         <item>Bizum</item>
         <item>Transferencia</item>
     </string-array>
+    <string name="prefijo_nomina">Nómina: %s</string>
+    <string name="movimiento_eliminado">Movimiento eliminado</string>
+    <string name="cambiar_tema">Cambiar Tema</string>
 </resources>

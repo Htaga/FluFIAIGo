@@ -1,5 +1,6 @@
 package com.example.flufiaigo
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,12 +9,14 @@ import android.widget.Button
 import android.widget.ImageButton
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.appbar.MaterialToolbar
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
@@ -23,18 +26,15 @@ import java.util.Locale
 class HomeFragment : Fragment() {
 
     private lateinit var adapter: MovimientoAdapter
-
     private var listaGastos: List<GastoModel> = emptyList()
     private var listaIngresos: List<IngresoModel> = emptyList()
     private var listaNominas: List<NominaModel> = emptyList()
     private var listaCompletaMovimientos: List<Entrada> = emptyList()
 
-    // Variables del selector de meses a nivel de clase para poder usarlas en cualquier parte
     private val calendario = Calendar.getInstance()
     private val formatoMes = SimpleDateFormat("MMMM yyyy", Locale.getDefault())
     private var tvMesActual: TextView? = null
 
-    // 1. COMBINAMOS LOS DATOS DE LA BBDD
     private fun actualizarListaCombinada() {
         val combinada = mutableListOf<Entrada>()
         combinada.addAll(listaGastos)
@@ -44,7 +44,7 @@ class HomeFragment : Fragment() {
             Entrada(
                 id = nomina.id,
                 fecha = nomina.fecha,
-                concepto = "Nómina: ${nomina.empleadoNombre}",
+                concepto = getString(R.string.prefijo_nomina, nomina.empleadoNombre),
                 importe = nomina.salarioNeto,
                 metodoPago = "-",
                 tipo = "nomina"
@@ -57,7 +57,6 @@ class HomeFragment : Fragment() {
         actualizarMes()
     }
 
-    // 2. FILTRAMOS POR MES Y SE LO PASAMOS AL ADAPTER
     private fun actualizarMes() {
         tvMesActual?.text = formatoMes.format(calendario.time).replaceFirstChar { it.uppercase() }
 
@@ -67,7 +66,6 @@ class HomeFragment : Fragment() {
         val listaFiltrada = listaCompletaMovimientos.filter { movimiento ->
             val calMovimiento = Calendar.getInstance()
             calMovimiento.time = movimiento.fecha
-
             calMovimiento.get(Calendar.MONTH) == mesSeleccionado &&
                     calMovimiento.get(Calendar.YEAR) == anioSeleccionado
         }
@@ -77,41 +75,43 @@ class HomeFragment : Fragment() {
         }
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val sharedPrefs = requireContext().getSharedPreferences("AjustesFluFi", android.content.Context.MODE_PRIVATE)
-        val esOscuro = sharedPrefs.getBoolean("modo_oscuro", false)
+        // --- PREFERENCIAS Y MODO OSCURO ---
+        val sharedPrefs = requireContext().getSharedPreferences("AjustesFluFi", Context.MODE_PRIVATE)
 
-        // Aplicar tema al entrar a la app
-        if (esOscuro) {
-            androidx.appcompat.app.AppCompatDelegate.setDefaultNightMode(androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES)
-        } else {
-            androidx.appcompat.app.AppCompatDelegate.setDefaultNightMode(androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO)
-        }
-        val toolbar = view.findViewById<com.google.android.material.appbar.MaterialToolbar>(R.id.topAppBar)
+        // --- TOOLBAR Y MENÚ ---
+        val toolbar = view.findViewById<MaterialToolbar>(R.id.topAppBar)
+        val esOscuroInicial = sharedPrefs.getBoolean("modo_oscuro", false)
+        val itemTema = toolbar.menu.findItem(R.id.action_theme)
+
+        itemTema?.title = getString(R.string.cambiar_tema)
+        itemTema?.setIcon(if (esOscuroInicial) R.drawable.baseline_wb_sunny_24 else R.drawable.baseline_dark_mode_24)
+
         toolbar.setOnMenuItemClickListener { menuItem ->
             if (menuItem.itemId == R.id.action_theme) {
-                val estadoActual = sharedPrefs.getBoolean("modo_oscuro", false)
-                sharedPrefs.edit().putBoolean("modo_oscuro", !estadoActual).apply()
-                if (!estadoActual) {
-                    androidx.appcompat.app.AppCompatDelegate.setDefaultNightMode(androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES)
+                val esOscuro = sharedPrefs.getBoolean("modo_oscuro", false)
+                val nuevoEstado = !esOscuro
+
+                sharedPrefs.edit().putBoolean("modo_oscuro", nuevoEstado).apply()
+
+                if (nuevoEstado) {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                    menuItem.setIcon(R.drawable.baseline_wb_sunny_24)
                 } else {
-                    androidx.appcompat.app.AppCompatDelegate.setDefaultNightMode(androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO)
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                    menuItem.setIcon(R.drawable.baseline_dark_mode_24)
                 }
                 true
-            } else {
-                false
-            }
+            } else false
         }
 
+        // --- RECYCLERVIEW ---
         val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerViewEntries)
         adapter = MovimientoAdapter()
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
@@ -122,10 +122,8 @@ class HomeFragment : Fragment() {
         val daoIngreso = database.ingresoDao
         val daoNomina = database.nominaDao
 
-        // --- DESLIZAR PARA BORRAR ---
-        val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(
-            0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
-        ) {
+        // --- SWIPE TO DELETE ---
+        val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
             override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder) = false
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
@@ -137,85 +135,48 @@ class HomeFragment : Fragment() {
                         is GastoModel -> daoGasto.deleteGasto(movimientoBorrado)
                         is IngresoModel -> daoIngreso.deleteIngreso(movimientoBorrado)
                         is Entrada -> {
-                             if (movimientoBorrado.tipo == "nomina") {
-                                val nominaOriginal = listaNominas.find { it.id == movimientoBorrado.id }
-                                if (nominaOriginal != null) {
-                                    daoNomina.deleteNomina(nominaOriginal)
-                                }
+                            if (movimientoBorrado.tipo == "nomina") {
+                                val original = listaNominas.find { it.id == movimientoBorrado.id }
+                                original?.let { daoNomina.deleteNomina(it) }
                             }
                         }
                     }
                 }
-                Toast.makeText(requireContext(), "Movimiento eliminado", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), getString(R.string.movimiento_eliminado), Toast.LENGTH_SHORT).show()
             }
         }
-        val itemTouchHelper = ItemTouchHelper(itemTouchHelperCallback)
-        itemTouchHelper.attachToRecyclerView(recyclerView)
+        ItemTouchHelper(itemTouchHelperCallback).attachToRecyclerView(recyclerView)
 
         // --- SELECTOR DE MESES ---
         tvMesActual = view.findViewById(R.id.tvMesActual)
-        val btnMesAnterior = view.findViewById<ImageButton>(R.id.btnMesAnterior)
-        val btnMesSiguiente = view.findViewById<ImageButton>(R.id.btnMesSiguiente)
+        val btnAnt = view.findViewById<ImageButton>(R.id.btnMesAnterior)
+        val btnSig = view.findViewById<ImageButton>(R.id.btnMesSiguiente)
 
-        btnMesAnterior.setOnClickListener {
-            calendario.add(Calendar.MONTH, -1)
-            actualizarMes()
-        }
-
-        btnMesSiguiente.setOnClickListener {
-            calendario.add(Calendar.MONTH, 1)
-            actualizarMes()
-        }
-
+        btnAnt.setOnClickListener { calendario.add(Calendar.MONTH, -1); actualizarMes() }
+        btnSig.setOnClickListener { calendario.add(Calendar.MONTH, 1); actualizarMes() }
         tvMesActual?.setOnClickListener {
-            val datePicker = android.app.DatePickerDialog(
-                requireContext(),
-                { _, year, month, _ ->
-                    calendario.set(Calendar.YEAR, year)
-                    calendario.set(Calendar.MONTH, month)
-                    actualizarMes()
-                },
-                calendario.get(Calendar.YEAR),
-                calendario.get(Calendar.MONTH),
-                calendario.get(Calendar.DAY_OF_MONTH)
-            )
-            datePicker.show()
+            android.app.DatePickerDialog(requireContext(), { _, y, m, _ ->
+                calendario.set(Calendar.YEAR, y); calendario.set(Calendar.MONTH, m); actualizarMes()
+            }, calendario.get(Calendar.YEAR), calendario.get(Calendar.MONTH), 1).show()
         }
 
-        // --- OBSERVERS DE LA BASE DE DATOS ---
+        // --- OBSERVERS ---
         daoGasto.getAllGastos().observe(viewLifecycleOwner) { lista ->
-            listaGastos = lista
-            actualizarListaCombinada()
+            listaGastos = lista; actualizarListaCombinada()
         }
-
         daoIngreso.getAllIngresos().observe(viewLifecycleOwner) { lista ->
-            listaIngresos = lista
-            actualizarListaCombinada()
+            listaIngresos = lista; actualizarListaCombinada()
         }
-
         daoNomina.getAllNominas().observe(viewLifecycleOwner) { lista ->
-            listaNominas = lista
-            actualizarListaCombinada()
+            listaNominas = lista; actualizarListaCombinada()
         }
 
-        // --- NAVEGACIÓN Y BOTONES ---
-        view.findViewById<Button>(R.id.btnNuevoGasto).setOnClickListener {
-            findNavController().navigate(R.id.action_homeFragment_to_gastoFragment)
-        }
-
-        view.findViewById<Button>(R.id.btnNuevoIngreso).setOnClickListener {
-            findNavController().navigate(R.id.action_homeFragment_to_ingresoFragment)
-        }
-
-        view.findViewById<Button>(R.id.btnNuevaNomina).setOnClickListener {
-            findNavController().navigate(R.id.action_homeFragment_to_nominaFragment)
-        }
-
+        // --- BOTONES NAVEGACIÓN ---
+        view.findViewById<Button>(R.id.btnNuevoGasto).setOnClickListener { findNavController().navigate(R.id.action_homeFragment_to_gastoFragment) }
+        view.findViewById<Button>(R.id.btnNuevoIngreso).setOnClickListener { findNavController().navigate(R.id.action_homeFragment_to_ingresoFragment) }
+        view.findViewById<Button>(R.id.btnNuevaNomina).setOnClickListener { findNavController().navigate(R.id.action_homeFragment_to_nominaFragment) }
         view.findViewById<Button>(R.id.btnSoporte).setOnClickListener {
-            val urlSoporte = "https://github.com/Htaga/FluFIAIGo"
-            val intentImplicito = android.content.Intent(android.content.Intent.ACTION_VIEW)
-            intentImplicito.data = android.net.Uri.parse(urlSoporte)
-            startActivity(intentImplicito)
+            startActivity(android.content.Intent(android.content.Intent.ACTION_VIEW, android.net.Uri.parse("https://github.com/Htaga/FluFIAIGo")))
         }
     }
 }
