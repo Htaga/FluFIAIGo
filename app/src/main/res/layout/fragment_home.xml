@@ -7,15 +7,22 @@
     android:orientation="vertical"
     android:padding="16dp">
 
-    <!-- Título de la App -->
-    <TextView
+    <!-- Menú Superior (AppBar) -->
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/nombre_app"
-        android:textAlignment="center"
-        android:textSize="28sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="16dp"/>
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="@android:color/transparent"
+        app:elevation="0dp">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/topAppBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:title="@string/nombre_app"
+            app:titleCentered="true"
+            app:menu="@menu/menu_superior" />
+    </com.google.android.material.appbar.AppBarLayout>
 
     <!-- Botones en fila para ahorrar espacio (Material Design) -->
     <LinearLayout
