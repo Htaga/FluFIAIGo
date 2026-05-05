@@ -122,6 +122,14 @@ class HomeFragment : Fragment() {
         val daoIngreso = database.ingresoDao
         val daoNomina = database.nominaDao
 
+        // FORZAR SINCRONIZACIÓN CON FIREBASE AL ABRIR LA APP
+        val repoGasto = GastoRepository(daoGasto)
+        val repoIngreso = IngresoRepository(daoIngreso)
+        val repoNomina = NominaRepository(daoNomina)
+        repoGasto.syncFromFirestore(viewLifecycleOwner.lifecycleScope)
+        repoIngreso.syncFromFirestore(viewLifecycleOwner.lifecycleScope)
+        repoNomina.syncFromFirestore(viewLifecycleOwner.lifecycleScope)
+
         // --- SWIPE TO DELETE ---
         val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
             override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder) = false
