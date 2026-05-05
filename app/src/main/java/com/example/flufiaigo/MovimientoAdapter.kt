@@ -44,6 +44,10 @@ class MovimientoAdapter(private var movimientos: List<Entrada> = emptyList()) :
             holder.tvImporte.text = "- ${movimiento.importe} €"
             holder.tvImporte.setTextColor(Color.parseColor("#F44336")) // Rojo
             holder.ivIcono.setImageResource(android.R.drawable.ic_menu_delete)
+        } else if (movimiento.tipo == "nomina") {
+            holder.tvImporte.text = "${movimiento.importe} €"
+            holder.tvImporte.setTextColor(Color.parseColor("#2196F3")) // Azul
+            holder.ivIcono.setImageResource(android.R.drawable.ic_menu_myplaces) // Icono genérico
         }
     }
 

@@ -14,6 +14,34 @@ class HomeFragment : Fragment() {
 
     private lateinit var adapter: MovimientoAdapter
 
+    private var listaGastos: List<GastoModel> = emptyList()
+    private var listaIngresos: List<IngresoModel> = emptyList()
+    private var listaNominas: List<NominaModel> = emptyList()
+
+    private fun actualizarListaCombinada() {
+        val combinada = mutableListOf<Entrada>()
+        combinada.addAll(listaGastos)
+        combinada.addAll(listaIngresos)
+        
+        // Convertimos las nóminas a un objeto Entrada genérico para poder mostrarlas en la lista
+        val nominasComoEntrada = listaNominas.map { nomina ->
+            Entrada(
+                id = nomina.id,
+                fecha = nomina.fecha,
+                concepto = "Nómina: ${nomina.empleadoNombre}",
+                importe = nomina.salarioNeto,
+                metodoPago = "-",
+                tipo = "nomina"
+            )
+        }
+        combinada.addAll(nominasComoEntrada)
+        
+        // Ordenamos todas las transacciones por fecha descendente (más reciente primero)
+        combinada.sortByDescending { it.fecha }
+        
+        adapter.actualizarDatos(combinada)
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -33,9 +61,19 @@ class HomeFragment : Fragment() {
         val daoIngreso = FluFiAIGoDatabase.getInstance(requireContext()).ingresoDao
         val daoNomina = FluFiAIGoDatabase.getInstance(requireContext()).nominaDao
 
-        daoGasto.getAllGastos().observe(viewLifecycleOwner) { listaMovimientos ->
-            // Cuando añades un gasto, ROOM avisa aquí automáticamente
-            adapter.actualizarDatos(listaMovimientos)
+        daoGasto.getAllGastos().observe(viewLifecycleOwner) { lista ->
+            listaGastos = lista
+            actualizarListaCombinada()
+        }
+
+        daoIngreso.getAllIngresos().observe(viewLifecycleOwner) { lista ->
+            listaIngresos = lista
+            actualizarListaCombinada()
+        }
+
+        daoNomina.getAllNominas().observe(viewLifecycleOwner) { lista ->
+            listaNominas = lista
+            actualizarListaCombinada()
         }
 
         val btnGasto = view.findViewById<Button>(R.id.btnNuevoGasto)
