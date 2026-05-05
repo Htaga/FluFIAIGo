@@ -14,12 +14,12 @@
         android:layout_height="wrap_content"
         android:padding="16dp">
 
-        <ImageView
-            android:id="@+id/ivIcono"
+        <TextView
+            android:id="@+id/tvEmoji"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            android:background="@drawable/ic_launcher_background"
-            android:padding="12dp"
+            android:gravity="center"
+            android:textSize="28sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -34,7 +34,7 @@
             android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/tvFecha"
             app:layout_constraintEnd_toStartOf="@+id/tvImporte"
-            app:layout_constraintStart_toEndOf="@+id/ivIcono"
+            app:layout_constraintStart_toEndOf="@+id/tvEmoji"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_chainStyle="packed" />
 
@@ -48,7 +48,7 @@
             android:textSize="14sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/tvImporte"
-            app:layout_constraintStart_toEndOf="@+id/ivIcono"
+            app:layout_constraintStart_toEndOf="@+id/tvEmoji"
             app:layout_constraintTop_toBottomOf="@+id/tvConcepto" />
 
         <TextView
