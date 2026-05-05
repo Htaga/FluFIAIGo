@@ -2,6 +2,7 @@ package com.example.flufiaigo
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.google.firebase.firestore.DocumentSnapshot
 import java.util.Date
 import java.util.UUID
 
@@ -15,3 +16,25 @@ data class IngresoModel(
     override val metodoPago: String,
     override val tipo: String = "ingreso"
 ) : Entrada(id, fecha, concepto, importe, metodoPago, tipo)
+
+fun IngresoModel.toMap() : Map<String, Any?> = mapOf(
+    "id" to id,
+    "fecha" to fecha,
+    "concepto" to concepto,
+    "importe" to importe,
+    "metodoPago" to metodoPago,
+    "tipo" to tipo
+)
+
+fun DocumentSnapshot.toIngresoModel() : IngresoModel? {
+    return try {
+        IngresoModel(
+            id = getString("id") ?: return null,
+            fecha = getDate("fecha") ?: Date(),
+            concepto = getString("concepto") ?: "",
+            importe = getDouble("importe") ?: 0.0,
+            metodoPago = getString("metodoPago") ?: "",
+            tipo = getString("tipo") ?: ""
+        )
+    } catch (e: Exception) { null}
+    }

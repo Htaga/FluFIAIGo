@@ -9,7 +9,7 @@ import kotlinx.coroutines.launch
 import java.util.Date
 import java.util.UUID
 
-class IngresoViewModel(private val dao: IngresoDao) : ViewModel() {
+class IngresoViewModel(private val repository: IngresoRepository) : ViewModel() {
 
     // 1. DATOS DE ENTRADA (Input del usuario)
     val concepto = MutableLiveData<String>("")
@@ -24,6 +24,10 @@ class IngresoViewModel(private val dao: IngresoDao) : ViewModel() {
     // 2. RESULTADO PROTEGIDO
     private val _ingresoActual = MutableLiveData<IngresoModel?>()
     val ingresoActual: LiveData<IngresoModel?> get() = _ingresoActual
+
+    init {
+        repository.syncFromFirestore(viewModelScope)
+    }
 
     fun crearIngreso() {
         val importe = importe.value?.toDoubleOrNull() ?: 0.0
@@ -40,18 +44,29 @@ class IngresoViewModel(private val dao: IngresoDao) : ViewModel() {
 
         // Guardar el ingreso en la base de datos usando corrutinas
         viewModelScope.launch {
-            dao.insertIngreso(nuevoIngreso)
+            repository.insertIngreso(nuevoIngreso)
             // Actualizamos la variable para notificar a la vista que ya se guardó
             _ingresoActual.value = nuevoIngreso
         }
     }
 }
 
-class IngresoViewModelFactory(private val dao: IngresoDao) : ViewModelProvider.Factory {
+//class IngresoViewModelFactory(private val dao: IngresoDao) : ViewModelProvider.Factory {
+//    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+//        if (modelClass.isAssignableFrom(IngresoViewModel::class.java)) {
+//            @Suppress("UNCHECKED_CAST")
+//            return IngresoViewModel(dao) as T
+//        }
+//        throw IllegalArgumentException("Unknown ViewModel class")
+//    }
+//}
+
+
+class IngresoViewModelFactory(private val repository: IngresoRepository) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(IngresoViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return IngresoViewModel(dao) as T
+            return IngresoViewModel(repository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

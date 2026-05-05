@@ -9,7 +9,7 @@ import kotlinx.coroutines.launch
 import java.util.Date
 import java.util.UUID
 
-class NominaViewModel(private val dao: NominaDao) : ViewModel() {
+class NominaViewModel(private val repository: NominaRepository) : ViewModel() {
 
     // 1. DATOS DE ENTRADA (Input del usuario)
     val nombreEmpleado = MutableLiveData<String>("")
@@ -23,6 +23,10 @@ class NominaViewModel(private val dao: NominaDao) : ViewModel() {
     // 2. RESULTADO PROTEGIDO
     private val _nominaActual = MutableLiveData<NominaModel?>()
     val nominaActual: LiveData<NominaModel?> get() = _nominaActual
+
+    init {
+        repository.syncFromFirestore(viewModelScope)
+    }
 
     fun calcularYGenerarNomina() {
         val base = sueldoBase.value?.toDoubleOrNull() ?: 0.0
@@ -47,18 +51,18 @@ class NominaViewModel(private val dao: NominaDao) : ViewModel() {
 
         // Guardar la nómina en la base de datos usando corrutinas
         viewModelScope.launch {
-            dao.insertNomina(nuevaNomina)
+            repository.insertNomina(nuevaNomina)
             // SÓLO el ViewModel tiene acceso a .value para escribir a través de la propiedad privada
             _nominaActual.value = nuevaNomina
         }
     }
 }
 
-class NominaViewModelFactory(private val dao: NominaDao) : ViewModelProvider.Factory {
+class NominaViewModelFactory(private val repository: NominaRepository) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(NominaViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return NominaViewModel(dao) as T
+            return NominaViewModel(repository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }
