@@ -57,4 +57,8 @@ class MovimientoAdapter(private var movimientos: List<Entrada> = emptyList()) :
         this.movimientos = nuevosMovimientos
         notifyDataSetChanged()
     }
+
+    fun obtenerMovimiento(posicion: Int): Entrada {
+        return movimientos[posicion]
+    }
 }

@@ -18,3 +18,5 @@ interface GastoDao {
     suspend fun deleteGasto(gasto: GastoModel)
 
 }
+
+
