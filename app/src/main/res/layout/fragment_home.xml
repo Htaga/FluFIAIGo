@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="4dp"
             android:layout_weight="1"
-            android:text="Ingreso" />
+            android:text="@string/ingreso_boton_inicial" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnNuevoGasto"
@@ -48,7 +48,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="4dp"
             android:layout_weight="1"
-            android:text="Gasto" />
+            android:text="@string/gasto_boton_inicial" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnNuevaNomina"
@@ -56,7 +56,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Nómina" />
+            android:text="@string/nomina_boton_inicial" />
     </LinearLayout>
 
     <!-- Selector de Meses -->
@@ -82,7 +82,7 @@
             android:textAlignment="center"
             android:textSize="18sp"
             android:textStyle="bold"
-            tools:text="Mayo 2026" />
+            tools:text="@string/fecha_muestra" />
 
         <ImageButton
             android:id="@+id/btnMesSiguiente"
