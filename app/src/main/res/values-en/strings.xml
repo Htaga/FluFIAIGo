@@ -1,0 +1,42 @@
+<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="en">
+    <string name="app_name" translatable="false">FluFiAIGo</string>
+    <string name="nombre_app" translatable="false">FluFiAI GO</string>
+    <string name="registrar_nomina">Record Payroll</string>
+    <string name="salario_bruto">Gross Salary (€)</string>
+    <string name="retenciones_impuestos">Withholdings / Taxes (€)</string>
+    <string name="calcular_neto">Calculate Net</string>
+    <string name="salario_neto">Net Salary:</string>
+    <string name="nuevo_ingreso">New Income</string>
+    <string name="nuevo_gasto">New Expense</string>
+    <string name="concepto_gasto">Concept (e.g. Groceries)</string>
+    <string name="concepto_ingreso">Concept (e.g. Sold Item)</string>
+    <string name="importe">Amount (€)</string>
+    <string name="es_un_gasto_recurrente">Is it a recurring expense?</string>
+    <string name="es_un_ingreso_recurrente">Is it a recurring income?</string>
+    <string name="guardar_gasto">Save Expense</string>
+    <string name="guardar_ingreso">Save Income</string>
+    <string name="soporte_y_ayuda">Support and Help</string>
+    <string name="nombre">Name</string>
+    <string name="fecha_gasto">Expense Date</string>
+    <string name="fecha_ingreso">Income Date</string>
+    <string name="categoria_gasto">Category (e.g. Transport)</string>
+    <string name="metodo_pago">Payment Method</string>
+    <string name="metodo_cobro">Collection Method</string>
+    <string name="fecha_muestra">May 2026</string>
+    <string name="ingreso_boton_inicial">Income</string>
+    <string name="gasto_boton_inicial">Expense</string>
+    <string name="nomina_boton_inicial">Payroll</string>
+    <string name="impuestos">Taxes (€)</string>
+    <string name="seguridad_social">Social Security (€)</string>
+    <string name="otras_deducciones">Other Deductions (€)</string>
+    <string name="horas_extra">Overtime (€)</string>
+    <string name="bonificaciones">Bonuses (€)</string>
+    <string name="guardar_nomina">Save Payroll</string>
+    <string name="sueldo_base">Base Salary (€)</string>
+    <string-array name="opciones_pago">
+        <item>Cash</item>
+        <item>Card</item>
+        <item>Bizum</item>
+        <item>Transfer</item>
+    </string-array>
+</resources>

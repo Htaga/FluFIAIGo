@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:locale="es">
     <string name="app_name">FluFiAIGo</string>
     <string name="nombre_app">FluFiAI GO</string>
     <string name="registrar_nomina">Registrar Nómina</string>
@@ -22,6 +22,17 @@
     <string name="categoria_gasto">Categoria (ej. Transporte)</string>
     <string name="metodo_pago">Método de Pago</string>
     <string name="metodo_cobro">Método de Cobro</string>
+    <string name="fecha_muestra">Mayo 2026</string>
+    <string name="ingreso_boton_inicial">Ingreso</string>
+    <string name="gasto_boton_inicial">Gasto</string>
+    <string name="nomina_boton_inicial">Nomina</string>
+    <string name="impuestos">Impuestos (€)</string>
+    <string name="seguridad_social">Seguridad Social (€)</string>
+    <string name="otras_deducciones">Otras Deducciones (€)</string>
+    <string name="horas_extra">Horas Extra (€)</string>
+    <string name="bonificaciones">Bonificaciones (€)</string>
+    <string name="guardar_nomina">Guardar Nómina</string>
+    <string name="sueldo_base">Sueldo Base (€)</string>
     <string-array name="opciones_pago">
         <item>Efectivo</item>
         <item>Tarjeta</item>
