@@ -87,6 +87,31 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val sharedPrefs = requireContext().getSharedPreferences("AjustesFluFi", android.content.Context.MODE_PRIVATE)
+        val esOscuro = sharedPrefs.getBoolean("modo_oscuro", false)
+
+        // Aplicar tema al entrar a la app
+        if (esOscuro) {
+            androidx.appcompat.app.AppCompatDelegate.setDefaultNightMode(androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES)
+        } else {
+            androidx.appcompat.app.AppCompatDelegate.setDefaultNightMode(androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO)
+        }
+        val toolbar = view.findViewById<com.google.android.material.appbar.MaterialToolbar>(R.id.topAppBar)
+        toolbar.setOnMenuItemClickListener { menuItem ->
+            if (menuItem.itemId == R.id.action_theme) {
+                val estadoActual = sharedPrefs.getBoolean("modo_oscuro", false)
+                sharedPrefs.edit().putBoolean("modo_oscuro", !estadoActual).apply()
+                if (!estadoActual) {
+                    androidx.appcompat.app.AppCompatDelegate.setDefaultNightMode(androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES)
+                } else {
+                    androidx.appcompat.app.AppCompatDelegate.setDefaultNightMode(androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_NO)
+                }
+                true
+            } else {
+                false
+            }
+        }
+
         val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerViewEntries)
         adapter = MovimientoAdapter()
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
