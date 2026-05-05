@@ -17,7 +17,8 @@ import java.util.Locale
 class GastoFragment : Fragment() {
 
     private val viewModel: GastoViewModel by viewModels {
-        GastoViewModelFactory(FluFiAIGoDatabase.getInstance(requireActivity().applicationContext).gastoDao)
+        val repository = (requireActivity().application as FluFIAIGoApplication).gastoRepository
+        GastoViewModelFactory(repository)
     }
     private var _binding: FragmentGastoBinding? = null
     private val binding get() = _binding!!

@@ -17,7 +17,8 @@ import java.util.Locale
 class IngresoFragment : Fragment() {
 
     private val viewModel: IngresoViewModel by viewModels {
-        IngresoViewModelFactory(FluFiAIGoDatabase.getInstance(requireActivity().applicationContext).ingresoDao)
+        val repository = (activity?.application as FluFIAIGoApplication).ingresoRepository
+        IngresoViewModelFactory(repository)
     }
     private var _binding: FragmentIngresoBinding? = null
     private val binding get() = _binding!!

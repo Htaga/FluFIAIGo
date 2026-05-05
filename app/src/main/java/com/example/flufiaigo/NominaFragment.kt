@@ -14,7 +14,8 @@ class NominaFragment : Fragment() {
 
     // Iniciamos el ViewModel
     private val viewModel: NominaViewModel by viewModels {
-        NominaViewModelFactory(FluFiAIGoDatabase.getInstance(requireActivity().applicationContext).nominaDao)
+        val repository = (requireActivity().application as FluFIAIGoApplication).nominaRepository
+        NominaViewModelFactory(repository)
     }
 
     // Variable para el DataBinding

@@ -9,7 +9,7 @@ import kotlinx.coroutines.launch
 import java.util.Date
 import java.util.UUID
 
-class GastoViewModel(private val dao: GastoDao) : ViewModel() {
+class GastoViewModel(private val repository: GastoRepository) : ViewModel() {
 
     // 1. DATOS DE ENTRADA (Input del usuario)
     val concepto = MutableLiveData<String>("")
@@ -24,6 +24,10 @@ class GastoViewModel(private val dao: GastoDao) : ViewModel() {
     // 2. RESULTADO PROTEGIDO
     private val _gastoActual = MutableLiveData<GastoModel?>()
     val gastoActual: LiveData<GastoModel?> get() = _gastoActual
+
+    init {
+        repository.syncFromFirestore(viewModelScope)
+    }
 
     fun crearGasto() {
         val importe = importe.value?.toDoubleOrNull() ?: 0.0
@@ -40,18 +44,18 @@ class GastoViewModel(private val dao: GastoDao) : ViewModel() {
 
         // Guardar el gasto en la base de datos usando corrutinas
         viewModelScope.launch {
-            dao.insertGasto(nuevoGasto)
+            repository.insertGasto(nuevoGasto)
             // Actualizamos la variable para notificar a la vista que ya se guardó
             _gastoActual.value = nuevoGasto
         }
     }
 }
 
-class GastoViewModelFactory(private val dao: GastoDao) : ViewModelProvider.Factory {
+class GastoViewModelFactory(private val repository: GastoRepository) : ViewModelProvider.Factory {
     override fun <T : ViewModel> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(GastoViewModel::class.java)) {
             @Suppress("UNCHECKED_CAST")
-            return GastoViewModel(dao) as T
+            return GastoViewModel(repository) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }
