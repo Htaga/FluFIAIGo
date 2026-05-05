@@ -8,17 +8,17 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.flufiaigo.databinding.FragmentIngresoBinding
-import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 
 class IngresoFragment : Fragment() {
 
-    private val viewModel: IngresoViewModel by viewModels()
+    private val viewModel: IngresoViewModel by viewModels {
+        IngresoViewModelFactory(FluFiAIGoDatabase.getInstance(requireActivity().applicationContext).ingresoDao)
+    }
     private var _binding: FragmentIngresoBinding? = null
     private val binding get() = _binding!!
 
@@ -66,12 +66,8 @@ class IngresoFragment : Fragment() {
 
         viewModel.ingresoActual.observe(viewLifecycleOwner) { ingreso ->
             if (ingreso != null) {
-                val dao = AppDatabase.getDatabase(requireContext()).financeDao()
-                lifecycleScope.launch {
-                    dao.insertIngreso(ingreso)
-                    Toast.makeText(requireContext(), "Ingreso guardado en Base de Datos", Toast.LENGTH_SHORT).show()
-                    findNavController().popBackStack()
-                }
+                Toast.makeText(requireContext(), "Ingreso guardado en Base de Datos", Toast.LENGTH_SHORT).show()
+                findNavController().popBackStack()
             }
         }
     }

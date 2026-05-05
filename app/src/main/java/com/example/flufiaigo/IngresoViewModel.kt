@@ -3,10 +3,13 @@ package com.example.flufiaigo
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
 import java.util.Date
 import java.util.UUID
 
-class IngresoViewModel : ViewModel() {
+class IngresoViewModel(private val dao: IngresoDao) : ViewModel() {
 
     // 1. DATOS DE ENTRADA (Input del usuario)
     val concepto = MutableLiveData<String>("")
@@ -35,6 +38,21 @@ class IngresoViewModel : ViewModel() {
             metodoPago = metodoCobro.value ?: "-"
         )
 
-        _ingresoActual.value = nuevoIngreso
+        // Guardar el ingreso en la base de datos usando corrutinas
+        viewModelScope.launch {
+            dao.insertIngreso(nuevoIngreso)
+            // Actualizamos la variable para notificar a la vista que ya se guardó
+            _ingresoActual.value = nuevoIngreso
+        }
+    }
+}
+
+class IngresoViewModelFactory(private val dao: IngresoDao) : ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(IngresoViewModel::class.java)) {
+            @Suppress("UNCHECKED_CAST")
+            return IngresoViewModel(dao) as T
+        }
+        throw IllegalArgumentException("Unknown ViewModel class")
     }
 }

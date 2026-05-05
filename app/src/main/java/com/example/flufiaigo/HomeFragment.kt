@@ -29,8 +29,11 @@ class HomeFragment : Fragment() {
         recyclerView.layoutManager = LinearLayoutManager(requireContext())
         recyclerView.adapter = adapter
 
-        val dao = AppDatabase.getDatabase(requireContext()).financeDao()
-        dao.getAllMovimientos().observe(viewLifecycleOwner) { listaMovimientos ->
+        val daoGasto = FluFiAIGoDatabase.getInstance(requireContext()).gastoDao
+        val daoIngreso = FluFiAIGoDatabase.getInstance(requireContext()).ingresoDao
+        val daoNomina = FluFiAIGoDatabase.getInstance(requireContext()).nominaDao
+
+        daoGasto.getAllGastos().observe(viewLifecycleOwner) { listaMovimientos ->
             // Cuando añades un gasto, ROOM avisa aquí automáticamente
             adapter.actualizarDatos(listaMovimientos)
         }

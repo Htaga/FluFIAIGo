@@ -3,10 +3,13 @@ package com.example.flufiaigo
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.launch
 import java.util.Date
 import java.util.UUID
 
-class NominaViewModel : ViewModel() {
+class NominaViewModel(private val dao: NominaDao) : ViewModel() {
 
     // 1. DATOS DE ENTRADA (Input del usuario)
     val nombreEmpleado = MutableLiveData<String>("")
@@ -42,7 +45,21 @@ class NominaViewModel : ViewModel() {
             fecha = Date()
         )
 
-        // SÓLO el ViewModel tiene acceso a .value para escribir a través de la propiedad privada
-        _nominaActual.value = nuevaNomina
+        // Guardar la nómina en la base de datos usando corrutinas
+        viewModelScope.launch {
+            dao.insertNomina(nuevaNomina)
+            // SÓLO el ViewModel tiene acceso a .value para escribir a través de la propiedad privada
+            _nominaActual.value = nuevaNomina
+        }
+    }
+}
+
+class NominaViewModelFactory(private val dao: NominaDao) : ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+        if (modelClass.isAssignableFrom(NominaViewModel::class.java)) {
+            @Suppress("UNCHECKED_CAST")
+            return NominaViewModel(dao) as T
+        }
+        throw IllegalArgumentException("Unknown ViewModel class")
     }
 }

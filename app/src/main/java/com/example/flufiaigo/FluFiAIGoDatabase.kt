@@ -8,26 +8,30 @@ import androidx.room.TypeConverters
 
 @Database(entities = [IngresoModel::class, GastoModel::class, NominaModel::class], version = 1, exportSchema = false)
 @TypeConverters(Converters::class)
-abstract class AppDatabase : RoomDatabase() {
+abstract class FluFiAIGoDatabase : RoomDatabase() {
 
-    abstract fun financeDao(): FinanceDao
+    abstract val ingresoDao: IngresoDao
+    abstract val gastoDao: GastoDao
+    abstract val nominaDao: NominaDao
 
     companion object {
         @Volatile
-        private var INSTANCE: AppDatabase? = null
+        private var INSTANCE: FluFiAIGoDatabase? = null
 
-        fun getInstance(context: Context): AppDatabase {
-            return INSTANCE ?: synchronized(this) {
-                val instance = Room.databaseBuilder(
+        fun getInstance(context: Context): FluFiAIGoDatabase {
+            var instance = INSTANCE
+
+            if (instance == null) {
+                instance = Room.databaseBuilder(
                     context.applicationContext,
-                    AppDatabase::class.java,
+                    FluFiAIGoDatabase::class.java,
                     "flufi_database"
                 )
                 .fallbackToDestructiveMigration()
                 .build()
                 INSTANCE = instance
-                instance
             }
+            return instance
         }
     }
 }

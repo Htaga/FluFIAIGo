@@ -8,17 +8,17 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.flufiaigo.databinding.FragmentGastoBinding
-import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
 
 class GastoFragment : Fragment() {
 
-    private val viewModel: GastoViewModel by viewModels()
+    private val viewModel: GastoViewModel by viewModels {
+        GastoViewModelFactory(FluFiAIGoDatabase.getInstance(requireActivity().applicationContext).gastoDao)
+    }
     private var _binding: FragmentGastoBinding? = null
     private val binding get() = _binding!!
 
@@ -67,15 +67,11 @@ class GastoFragment : Fragment() {
             datePickerDialog.show()
         }
 
-        // 3. Observar la creación del gasto para guardarlo
+        // 3. Observar la creación del gasto (ya guardado por el ViewModel)
         viewModel.gastoActual.observe(viewLifecycleOwner) { gasto ->
             if (gasto != null) {
-                val dao = AppDatabase.getDatabase(requireContext()).financeDao()
-                lifecycleScope.launch {
-                    dao.insertGasto(gasto)
-                    Toast.makeText(requireContext(), "Gasto guardado en Base de Datos", Toast.LENGTH_SHORT).show()
-                    findNavController().popBackStack()
-                }
+                Toast.makeText(requireContext(), "Gasto guardado en Base de Datos", Toast.LENGTH_SHORT).show()
+                findNavController().popBackStack()
             }
         }
     }
