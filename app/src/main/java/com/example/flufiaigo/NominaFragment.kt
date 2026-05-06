@@ -45,6 +45,11 @@ class NominaFragment : Fragment() {
                 findNavController().popBackStack()
             }
         }
+
+        // Configuramos el botón de atrás de la barra superior
+        binding.topAppBar.setNavigationOnClickListener {
+            findNavController().navigateUp()
+        }
     }
 
     override fun onDestroyView() {

@@ -38,7 +38,12 @@ class GastoFragment : Fragment() {
 
         val calendario = Calendar.getInstance()
         val formatoFecha = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-        
+
+        // Configuramos el botón de atrás de la barra superior
+        binding.topAppBar.setNavigationOnClickListener {
+            findNavController().navigateUp()
+        }
+
         // 1. Configurar la fecha por defecto si está vacía
         if (viewModel.fechaTexto.value.isNullOrEmpty()) {
             viewModel.fechaReal.value = calendario.time

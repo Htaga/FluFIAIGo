@@ -38,7 +38,12 @@ class IngresoFragment : Fragment() {
 
         val calendario = Calendar.getInstance()
         val formatoFecha = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-        
+
+        // Configuramos el botón de atrás de la barra superior
+        binding.topAppBar.setNavigationOnClickListener {
+            findNavController().navigateUp()
+        }
+
         if (viewModel.fechaTexto.value.isNullOrEmpty()) {
             viewModel.fechaReal.value = calendario.time
             viewModel.fechaTexto.value = formatoFecha.format(calendario.time)
