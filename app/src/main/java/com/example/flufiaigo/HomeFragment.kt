@@ -131,6 +131,7 @@ class HomeFragment : Fragment() {
         repoNomina.syncFromFirestore(viewLifecycleOwner.lifecycleScope)
 
         // --- SWIPE TO DELETE ---
+        val dbFirebase = com.google.firebase.firestore.FirebaseFirestore.getInstance()
         val itemTouchHelperCallback = object : ItemTouchHelper.SimpleCallback(0, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT) {
             override fun onMove(recyclerView: RecyclerView, viewHolder: RecyclerView.ViewHolder, target: RecyclerView.ViewHolder) = false
 
@@ -140,12 +141,21 @@ class HomeFragment : Fragment() {
 
                 viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
                     when (movimientoBorrado) {
-                        is GastoModel -> daoGasto.deleteGasto(movimientoBorrado)
-                        is IngresoModel -> daoIngreso.deleteIngreso(movimientoBorrado)
+                        is GastoModel -> {
+                            daoGasto.deleteGasto(movimientoBorrado) // Borra del móvil
+                            dbFirebase.collection("gastos").document(movimientoBorrado.id).delete() // Borra de la nube
+                        }
+                        is IngresoModel -> {
+                            daoIngreso.deleteIngreso(movimientoBorrado)
+                            dbFirebase.collection("ingresos").document(movimientoBorrado.id).delete()
+                        }
                         is Entrada -> {
                             if (movimientoBorrado.tipo == "nomina") {
                                 val original = listaNominas.find { it.id == movimientoBorrado.id }
-                                original?.let { daoNomina.deleteNomina(it) }
+                                original?.let {
+                                    daoNomina.deleteNomina(it)
+                                    dbFirebase.collection("nominas").document(it.id).delete()
+                                }
                             }
                         }
                     }
