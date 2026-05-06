@@ -142,19 +142,44 @@ class HomeFragment : Fragment() {
                 viewLifecycleOwner.lifecycleScope.launch(Dispatchers.IO) {
                     when (movimientoBorrado) {
                         is GastoModel -> {
-                            daoGasto.deleteGasto(movimientoBorrado) // Borra del móvil
-                            dbFirebase.collection("gastos").document(movimientoBorrado.id).delete() // Borra de la nube
+                            daoGasto.deleteGasto(movimientoBorrado)
+
+                            // Busca en la nube el que tenga este ID y lo borra
+                            dbFirebase.collection("gastos")
+                                .whereEqualTo("id", movimientoBorrado.id)
+                                .get()
+                                .addOnSuccessListener { documentos ->
+                                    for (doc in documentos) {
+                                        doc.reference.delete()
+                                    }
+                                }
                         }
                         is IngresoModel -> {
                             daoIngreso.deleteIngreso(movimientoBorrado)
-                            dbFirebase.collection("ingresos").document(movimientoBorrado.id).delete()
+
+                            dbFirebase.collection("ingresos")
+                                .whereEqualTo("id", movimientoBorrado.id)
+                                .get()
+                                .addOnSuccessListener { documentos ->
+                                    for (doc in documentos) {
+                                        doc.reference.delete()
+                                    }
+                                }
                         }
                         is Entrada -> {
                             if (movimientoBorrado.tipo == "nomina") {
                                 val original = listaNominas.find { it.id == movimientoBorrado.id }
                                 original?.let {
                                     daoNomina.deleteNomina(it)
-                                    dbFirebase.collection("nominas").document(it.id).delete()
+
+                                    dbFirebase.collection("nominas")
+                                        .whereEqualTo("id", it.id)
+                                        .get()
+                                        .addOnSuccessListener { documentos ->
+                                            for (doc in documentos) {
+                                                doc.reference.delete()
+                                            }
+                                        }
                                 }
                             }
                         }
