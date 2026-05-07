@@ -41,7 +41,7 @@ class NominaFragment : Fragment() {
         // Observar la creación de la nómina (ya guardada por el ViewModel)
         viewModel.nominaActual.observe(viewLifecycleOwner) { nomina ->
             if (nomina != null) {
-                Toast.makeText(requireContext(), "Nómina guardada en Base de Datos", android.widget.Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), R.string.nomina_guardada, android.widget.Toast.LENGTH_SHORT).show()
                 findNavController().popBackStack()
             }
         }

@@ -42,4 +42,7 @@
     <string name="prefijo_nomina">Nómina: %s</string>
     <string name="movimiento_eliminado">Movimiento eliminado</string>
     <string name="cambiar_tema">Cambiar Tema</string>
+    <string name="ingreso_guardado">Ingreso guardado</string>
+    <string name="gasto_guardado">Gasto guardado</string>
+    <string name="nomina_guardada">Nomina guardada</string>
 </resources>

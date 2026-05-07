@@ -72,7 +72,7 @@ class IngresoFragment : Fragment() {
 
         viewModel.ingresoActual.observe(viewLifecycleOwner) { ingreso ->
             if (ingreso != null) {
-                Toast.makeText(requireContext(), "Ingreso guardado en Base de Datos", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), R.string.ingreso_guardado, Toast.LENGTH_SHORT).show()
                 findNavController().popBackStack()
             }
         }

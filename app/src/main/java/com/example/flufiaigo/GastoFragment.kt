@@ -76,7 +76,7 @@ class GastoFragment : Fragment() {
         // 3. Observar la creación del gasto (ya guardado por el ViewModel)
         viewModel.gastoActual.observe(viewLifecycleOwner) { gasto ->
             if (gasto != null) {
-                Toast.makeText(requireContext(), "Gasto guardado en Base de Datos", Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), R.string.gasto_guardado, Toast.LENGTH_SHORT).show()
                 findNavController().popBackStack()
             }
         }
